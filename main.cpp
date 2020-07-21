@@ -7,20 +7,20 @@ using namespace std;
 int main()
 {
     Birbtree tree;
-    Node A(36), B(16), C(41), D(4), E(22), F(39),G(48),
-         H(3),I(9),J(19),K(27),L(45),M(52), N(1), O(7),
-         P(10),Q(24),R(51),S(55);
-    tree.Insert(&A); tree.Insert(&B); tree.Insert(&C); tree.Insert(&D);
-    tree.Insert(&E); tree.Insert(&F); tree.Insert(&G); tree.Insert(&H);
-    tree.Insert(&I); tree.Insert(&J); tree.Insert(&K); tree.Insert(&L);
-    tree.Insert(&M); tree.Insert(&N); tree.Insert(&O); tree.Insert(&P);
-    tree.Insert(&Q); tree.Insert(&R); tree.Insert(&S);  
+    Node *A = new Node(36), *B = new Node(16), *C = new Node(41), *D = new Node(4), *E = new Node(22), *F = new Node(39),*G = new Node(48),
+         *H = new Node(3),*I = new Node(9),*J = new Node(19),*K = new Node(27),*L = new Node(45),*M = new Node(52), *N = new Node(1), *O = new Node(7),
+         *P = new Node(10),*Q = new Node(24),*R = new Node(51),*S = new Node(55);
+    tree.Insert(A); tree.Insert(B); tree.Insert(C); tree.Insert(D);
+    tree.Insert(E); tree.Insert(F); tree.Insert(G); tree.Insert(H);
+    tree.Insert(I); tree.Insert(J); tree.Insert(K); tree.Insert(L);
+    tree.Insert(M); tree.Insert(N); tree.Insert(O); tree.Insert(P);
+    tree.Insert(Q); tree.Insert(R); tree.Insert(S);  
 
     tree.Inorder_traversal();
     tree.LevelOrder_traversal();
 
-    tree.Delete(&S);
-    //tree.LevelOrder_traversal();
+    tree.Delete(S);
+    tree.LevelOrder_traversal();
     //tree.Delete(&R);tree.LevelOrder_traversal();
     //tree.Delete(&Q);tree.LevelOrder_traversal();
     //tree.Delete(&P);tree.LevelOrder_traversal();
