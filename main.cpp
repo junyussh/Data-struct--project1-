@@ -19,7 +19,18 @@ int main()
     tree.Inorder_traversal();
     tree.LevelOrder_traversal();
 
+    tree.Delete(&S);
+    //tree.LevelOrder_traversal();
+    //tree.Delete(&R);tree.LevelOrder_traversal();
+    //tree.Delete(&Q);tree.LevelOrder_traversal();
+    //tree.Delete(&P);tree.LevelOrder_traversal();
+    //tree.Delete(&O);tree.LevelOrder_traversal();
+    //tree.Delete(&N);tree.LevelOrder_traversal();
+    //tree.Delete(&M);tree.LevelOrder_traversal();
 
+
+
+    /*
     double input_data[10]={2.2,5.6,7.5,9.1,3.4,6.4,8.8,1.3,12.7,14.6};
     int arr[10][10]={
             {0,1,1,0,0,0,0,0,0,0},
@@ -52,6 +63,7 @@ int main()
         gg.BFS(i);
         gg.DFS(i);
     }
+    */
 
     return 0;
 }

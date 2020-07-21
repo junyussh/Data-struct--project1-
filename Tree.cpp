@@ -604,6 +604,7 @@ void Birbtree::InsertFix(Node * node)
 
 void Birbtree::Delete(Node* delete_node)
 {
+    
     delete_node=search(delete_node);
     if(delete_node== nullptr)
     {
@@ -612,11 +613,15 @@ void Birbtree::Delete(Node* delete_node)
     else
     {
         //--- adjust to case 1 or 2 in BST
+        Node* father;
+        int temp;
         if(delete_node->right!= nullptr&&delete_node->left!= nullptr)
         {
             Node* child=successor(delete_node);
-            delete_node->key=child->key;
+            father=delete_node;
+            temp=child->key;
             delete_node=child;
+            delete child;
         }
         //---
         if(delete_node==head)
@@ -655,12 +660,15 @@ void Birbtree::Delete(Node* delete_node)
                 }
                 else
                 {
+                    //cout<<"fix"<<endl;
+                    //-- need fix
                     Node* child=new Node;
                     child->color=black;
                     child->parent=delete_node;
                     delete_node->right=child;
                     Bistree::Delete(delete_node);
                     DeleteFix(child);
+                    father->key=temp;
                 }
             }
         }
@@ -669,113 +677,92 @@ void Birbtree::Delete(Node* delete_node)
 
 void Birbtree::DeleteFix(Node * node)
 {
-  while (node->color==black&&node!=head)
-  {
-      if(node==node->parent->left)
-      {   //-- current is left
-          Node* sibling=node->parent->right;
-          if(sibling->color==red)
-          {
+  while (node->color==black&&node!=head) {
+      if (node == node->parent->left) {   //-- current is left
+          Node *sibling = node->parent->right;
+          if (sibling->color == red) {
               //--case 1
-              sibling->color=black;
-              node->parent->color=red;
+              sibling->color = black;
+              node->parent->color = red;
               LeftRotation(node->parent);
-              if(node==node->parent->right)
-                  sibling=node->parent->left;
+              if (node == node->parent->right)
+                  sibling = node->parent->left;
               else
-                  sibling=node->parent->right;
+                  sibling = node->parent->right;
           }
-          if(sibling->color==black&&sibling->right== nullptr&&sibling->left== nullptr)
-          {
+          if (sibling->color == black && sibling->right == nullptr && sibling->left == nullptr) {
               //--case 2
-              sibling->color=red;
-              Node* child=node;
-              node=node->parent;
-              if(child==child->parent->right)
-                  child->parent->right= nullptr;
-              else
-                  child->parent->left = nullptr;
-               delete child;
-          }
-          else
-          {
-              if(sibling->right->color==black)
-              {
+              sibling->color = red;
+              node = node->parent;
+          } else {
+              if (sibling->right== nullptr) {
                   //--case 3
-                  sibling->left->color=black;
-                  sibling->color=red;
+                  sibling->left->color = black;
+                  sibling->color = red;
                   RightRotation(sibling);
-                  if(node==node->parent->right)
-                      sibling=node->parent->left;
+                  if (node == node->parent->right)
+                      sibling = node->parent->left;
                   else
-                      sibling=node->parent->right;
+                      sibling = node->parent->right;
               }
               //--case 4
-               sibling->color=node->parent->color;
-               node->parent->color=black;
-               sibling->right->color=black;
-               LeftRotation(node->parent);
-              if(node==node->parent->right)
-                  node->parent->right= nullptr;
+              sibling->color = node->parent->color;
+              node->parent->color = black;
+              sibling->right->color = black;
+              LeftRotation(node->parent);
+              if (node == node->parent->right)
+                  node->parent->right = nullptr;
               else
                   node->parent->left = nullptr;
-               delete node;
+              delete node;
               return;
           }
-      }
-      else
-      {
-          Node* sibling=node->parent->left; 
-          if(sibling->color==red)
-          {
+      } else {
+          Node *sibling = node->parent->left;
+          if (sibling->color == red) {
               //--case 1
-              sibling->color=black;
-              node->parent->color=red;
+              sibling->color = black;
+              node->parent->color = red;
               RightRotation(node->parent);
-              if(node==node->parent->right)
-                  sibling=node->parent->left;
+              if (node == node->parent->right)
+                  sibling = node->parent->left;
               else
-                  sibling=node->parent->right;
+                  sibling = node->parent->right;
           }
-          if(sibling->color==black&&sibling->right== nullptr&&sibling->left== nullptr)
-          {
+          if (sibling->color == black && sibling->right == nullptr && sibling->left == nullptr) {
               //--case 2
-              sibling->color=red;
-              Node* child=node;
-              node=node->parent;
-              if(child==child->parent->right)
-                  child->parent->right= nullptr;
+              sibling->color = red;
+              Node *child = node;
+              node = node->parent;
+              if (child == child->parent->right)
+                  child->parent->right = nullptr;
               else
                   child->parent->left = nullptr;
-               delete child;
-          }
-          else
-          {
-              if(sibling->right->color==black)
-              {
+              delete child;
+          } else {
+              if (sibling->right== nullptr) {
                   //--case 3
-                  sibling->left->color=black;
-                  sibling->color=red;
+                  sibling->left->color = black;
+                  sibling->color = red;
                   LeftRotation(sibling);
-                  if(node==node->parent->right)
-                      sibling=node->parent->left;
+                  if (node == node->parent->right)
+                      sibling = node->parent->left;
                   else
-                      sibling=node->parent->right;
+                      sibling = node->parent->right;
               }
               //--case 4
-               sibling->color=node->parent->color;
-               node->parent->color=black;
-               sibling->left->color=black;
-               RightRotation(node->parent);
-              if(node==node->parent->right)
-                  node->parent->right= nullptr;
+              sibling->color = node->parent->color;
+              node->parent->color = black;
+              sibling->left->color = black;
+              RightRotation(node->parent);
+              if (node == node->parent->right)
+                  node->parent->right = nullptr;
               else
                   node->parent->left = nullptr;
-               delete node;
+              delete node;
               return;
           }
-
       }
+      node->color = black;
   }
-  node->color=black;
 }
